@@ -12,8 +12,13 @@ namespace Golf_Assignment_PJ
         {
             //golf assignment by PJ
 
+            //misc values
+            Random rnd = new Random();
+            double courserandom = rnd.Next(50, 400);
+
+
             //distances
-            double courselength = 320;
+            double courselength = courserandom;
             double distanceTohole = courselength;
             double toofar = courselength * 1.5;
 
@@ -31,6 +36,7 @@ namespace Golf_Assignment_PJ
             //lists
             List<double> landings = new List<double>();
             List<int> swings = new List<int>();
+            List<string> swingreport = new List<string>();
 
             //double angleInRadians = ((Math.PI / 180) * angle);
 
@@ -82,7 +88,7 @@ namespace Golf_Assignment_PJ
                 landings.Add(distanceofswing);
 
                 amountofswings++;
-                
+                swingreport.Add("Swing number: " + amountofswings + " Distance Traveled " + distanceofswing);
                 swings.Add(amountofswings);
 
                 //landings.ForEach(Console.WriteLine);
@@ -112,17 +118,25 @@ namespace Golf_Assignment_PJ
                     distanceTohole = Math.Abs(distanceTohole);
                     if (distanceTohole >= toofar)
                     {
-                        Console.WriteLine("Dude, too far, GAME OVER");
+                        Console.WriteLine("You've hit the ball too far. GAME OVER");
                         mainloop = false;
                     }
                     else
                     {
-                        Console.WriteLine("You overshot it");
+                        Console.WriteLine("You overshot the hole");
 
                         distanceTohole = Math.Abs(distanceTohole);
 
                         Console.WriteLine("Distance left to the hole: " + distanceTohole);
                         Console.WriteLine();
+                        Console.WriteLine("amount of Swings: " + amountofswings);
+                        Console.WriteLine();
+                        Console.WriteLine("Distance for each swing");
+                        foreach (string s in swingreport)
+                        {
+                            //Console.WriteLine(": " + distance + " meters");
+                            Console.WriteLine(s);
+                        }
                     }
 
 
@@ -131,17 +145,27 @@ namespace Golf_Assignment_PJ
                 }
                 else if (distanceTohole > 0)
                 {
-                        Console.WriteLine("Not quite enough");
+                    Console.WriteLine("Not quite enough");
 
-                        distanceTohole = Math.Abs(distanceTohole);
+                    distanceTohole = Math.Abs(distanceTohole);
 
-                        Console.WriteLine("Distance left to the hole: " + distanceTohole);
-                        Console.WriteLine();
+                    Console.WriteLine("Distance left to the hole: " + distanceTohole);
+                    Console.WriteLine();
+                    Console.WriteLine("amount of Swings: " + amountofswings);
+                    Console.WriteLine();
+                    Console.WriteLine("Distance for each swing");
+                    foreach (string s in swingreport)
+                    {
+                        //Console.WriteLine(": " + distance + " meters");
+                        Console.WriteLine(s);
+                    }
 
                 }
 
                 if (amountofswings >= maxswings)
                 {
+                    Console.WriteLine();
+                    Console.WriteLine();
                     Console.WriteLine("You've taken too many swings, GAME OVER.");
 
 
@@ -158,14 +182,16 @@ namespace Golf_Assignment_PJ
             Console.WriteLine("amount of Swings: " + amountofswings);
             Console.WriteLine();
             Console.WriteLine("Distance for each swing");
-            foreach (double distance in landings)
+            foreach (string s in swingreport)
             {
-                Console.WriteLine(": " + distance + " meters");
-                Console.WriteLine();
+                //Console.WriteLine(": " + distance + " meters");
+                Console.WriteLine(s);
             }
+
 
             Console.ReadKey();
 
         }
     }//class
 }//namespace
+

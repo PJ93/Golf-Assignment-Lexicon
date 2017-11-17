@@ -1,0 +1,171 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Golf_Assignment_PJ
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            //golf assignment by PJ
+
+            //distances
+            double courselength = 320;
+            double distanceTohole = courselength;
+            double toofar = courselength * 1.5;
+
+            //angles
+            int yangle = 90;
+            int xangle = 0;
+            //swings
+            int amountofswings = 0;
+            int maxswings = 10;
+            //constants
+            double GRAVITY = 9.8;
+            double angle = 0;
+            double velocity = 0;
+
+            //lists
+            List<double> landings = new List<double>();
+            List<int> swings = new List<int>();
+
+            //double angleInRadians = ((Math.PI / 180) * angle);
+
+            //double distance = Math.Pow(velocity, 2) / GRAVITY * Math.Sin(2 * angleInRadians);
+
+            Console.WriteLine("It's a lovely day on the green");
+            Console.WriteLine("The course is " + distanceTohole + " meters long.");
+            Console.WriteLine("The max amount of swings for this course is " + maxswings);
+            Console.WriteLine();
+
+            bool mainloop = true;
+            while (mainloop)
+            {
+                bool anglecheck = true;
+                while (anglecheck)
+                {
+                    Console.WriteLine("Input angle");
+                    angle = Convert.ToDouble(Console.ReadLine());
+
+                    if (angle > yangle)
+                    {
+                        Console.WriteLine("Too big, keep it between 90 and 0 degrees");
+                    }
+                    else if (angle < xangle)
+                    {
+                        Console.WriteLine("Too small, you're just hitting it into the ground, keep it between 90 and 0 degrees");
+                    }
+                    else
+                    {
+                        anglecheck = false;
+                    }
+
+                }//anglecheck
+
+                Console.WriteLine("Input velocity");
+                velocity = Convert.ToDouble(Console.ReadLine());
+
+                Console.WriteLine("angle: " + angle);
+                Console.WriteLine("velocity: " + velocity);
+                //Console.WriteLine("This okay?");
+                //Console.WriteLine("[Y/N]");
+
+                double angleInRadians = ((Math.PI / 180) * angle);
+
+                double distanceofswing = Math.Pow(velocity, 2) / GRAVITY * Math.Sin(2 * angleInRadians);
+
+                Console.WriteLine("Distance traveled: " + distanceofswing);
+
+                landings.Add(distanceofswing);
+
+                amountofswings++;
+                
+                swings.Add(amountofswings);
+
+                //landings.ForEach(Console.WriteLine);
+
+                distanceTohole = distanceTohole - distanceofswing;
+
+
+                if (distanceTohole == 0)
+                {
+                    if (amountofswings == 1)
+                    {
+                        Console.WriteLine("HOLE IN ONE!");
+                        Console.WriteLine("*golf claps*");
+                        mainloop = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Congrats you somehow did it!");
+                        Console.WriteLine("it took " + swings.Last() + " swings.");
+
+                        mainloop = false;
+
+                    }
+                }
+                else if (distanceTohole < 0)
+                {
+                    distanceTohole = Math.Abs(distanceTohole);
+                    if (distanceTohole >= toofar)
+                    {
+                        Console.WriteLine("Dude, too far, GAME OVER");
+                        mainloop = false;
+                    }
+                    else
+                    {
+                        Console.WriteLine("You overshot it");
+
+                        distanceTohole = Math.Abs(distanceTohole);
+
+                        Console.WriteLine("Distance left to the hole: " + distanceTohole);
+                        Console.WriteLine();
+                    }
+
+
+                    //Console.WriteLine("it took " + swings.Last() + " swings.");
+                    //mainloop = false;
+                }
+                else if (distanceTohole > 0)
+                {
+                        Console.WriteLine("Not quite enough");
+
+                        distanceTohole = Math.Abs(distanceTohole);
+
+                        Console.WriteLine("Distance left to the hole: " + distanceTohole);
+                        Console.WriteLine();
+
+                }
+
+                if (amountofswings >= maxswings)
+                {
+                    Console.WriteLine("You've taken too many swings, GAME OVER.");
+
+
+                    mainloop = false;
+                }
+                else
+                {
+
+                }
+
+            }//mainloop
+
+            Console.WriteLine("================================");
+            Console.WriteLine("amount of Swings: " + amountofswings);
+            Console.WriteLine();
+            Console.WriteLine("Distance for each swing");
+            foreach (double distance in landings)
+            {
+                Console.WriteLine(": " + distance + " meters");
+                Console.WriteLine();
+            }
+
+            Console.ReadKey();
+
+        }
+    }//class
+}//namespace
